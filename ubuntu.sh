@@ -1,10 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
 folder=ubuntu-fs
-if [ -d "$folder" ]; then
-	first=1
-	echo "skipping downloading"
-fi
-tarball="ubuntu.tar.gz"
+uv=22.04
+tarball="ubuntu${uv}.tar.gz"
 if [ "$first" != 1 ];then
 	if [ ! -f $tarball ]; then
 		echo "downloading ubuntu-image"
@@ -22,9 +19,10 @@ if [ "$first" != 1 ];then
 		*)
 			echo "unknown architecture"; exit 1 ;;
 		esac
-		wget "https://partner-images.canonical.com/core/disco/current/ubuntu-disco-core-cloudimg-${archurl}-root.tar.gz" -O $tarball
+		wget "https://cdimage.ubuntu.com/ubuntu-base/releases/${uv}/release/ubuntu-base-${uv}-base-${archurl}.tar.gz" -O $tarball
 	fi
 	cur=`pwd`
+  rm -rfv "$folder"
 	mkdir -p "$folder"
 	cd "$folder"
 	echo "decompressing ubuntu image"
